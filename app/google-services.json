@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "588699496190",
+    "firebase_url": "https://salah-reminder-22873.firebaseio.com",
+    "project_id": "salah-reminder-22873",
+    "storage_bucket": "salah-reminder-22873.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588699496190:android:d1589adb7071f91861bfaf",
+        "android_client_info": {
+          "package_name": "com.google.salahreminder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "588699496190-ad5fckajs538ant0g7bnkmvn55pu1m5j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.google.salahreminder",
+            "certificate_hash": "181fc858ea87201aade631f1c8bbd8c7da884e18"
+          }
+        },
+        {
+          "client_id": "588699496190-d154fs9cbaeb4rqkqahrvji2chsal9dq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZiZYtZGJN5hkmJjhylo97vGG8lUhFgDc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "588699496190-d154fs9cbaeb4rqkqahrvji2chsal9dq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
