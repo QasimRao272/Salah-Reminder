@@ -44,20 +44,22 @@ public class ExecutableService extends BroadcastReceiver {
             }
         });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (!intent.getStringExtra("Yes").isEmpty() && intent.getStringExtra("Yes").isEmpty()) {
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Offered_Prayers").child(getMacAddr());
-                Toast.makeText(notificaitonHelper, "Yes Clicked", Toast.LENGTH_LONG).show();
-                ref.child(String.valueOf(year)).child(String.valueOf(month)).child(String.valueOf(date)).child("Fajar").setValue("Yes");
-            } else if (!intent.getStringExtra("Yes").equals("") && intent.getStringExtra("Yes").equals("No")) {
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Offered_Prayers").child(getMacAddr());
-                Toast.makeText(notificaitonHelper, "No Clicked", Toast.LENGTH_LONG).show();
-                ref.child(String.valueOf(year)).child(String.valueOf(month)).child(String.valueOf(date)).child("Fajar").setValue("No");
-            } else if (!intent.getStringExtra("Yes").equals("") && intent.getStringExtra("Yes").equals("Alarm")) {
-                mp.stop();
-                mp.release();
-            }
+
+        if (!intent.getStringExtra("Yes").isEmpty() && intent.getStringExtra("Yes").isEmpty()) {
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Offered_Prayers").child(getMacAddr());
+            Toast.makeText(notificaitonHelper, "Yes Clicked", Toast.LENGTH_LONG).show();
+            ref.child(String.valueOf(year)).child(String.valueOf(month)).child(String.valueOf(date)).child("Fajar").setValue("Yes");
+        } else if (!intent.getStringExtra("Yes").equals("") && intent.getStringExtra("Yes").equals("No")) {
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Offered_Prayers").child(getMacAddr());
+            Toast.makeText(notificaitonHelper, "No Clicked", Toast.LENGTH_LONG).show();
+            ref.child(String.valueOf(year)).child(String.valueOf(month)).child(String.valueOf(date)).child("Fajar").setValue("No");
+        } else if (!intent.getStringExtra("Yes").equals("") && intent.getStringExtra("Yes").equals("Alarm")) {
+            mp.stop();
+            mp.release();
         }
+        /*
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {}
+         */
 
         /* Notification notification = nb.build();
         notification.defaults |= Notification.DEFAULT_VIBRATE;
