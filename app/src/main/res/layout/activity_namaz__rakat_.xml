@@ -229,7 +229,7 @@
                 android:background="@drawable/border"
                 android:gravity="center"
                 android:padding="20dip"
-                android:text="Maghrib"
+                android:text="Magrib"
                 android:textColor="#297790" />
 
             <TextView

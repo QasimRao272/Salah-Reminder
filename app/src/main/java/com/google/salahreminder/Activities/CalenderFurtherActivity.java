@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ public class CalenderFurtherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calender_further);
+
         Toolbar toolbar = findViewById(R.id.tool_bar);
         TextView textView = toolbar.findViewById(R.id.toolbar_text);
         FrameLayout banner_container = findViewById(R.id.ad_view_container);
@@ -38,6 +40,14 @@ public class CalenderFurtherActivity extends AppCompatActivity {
         tv = findViewById(R.id.tv);
         int date = getIntent().getIntExtra("date", 0);
         tv.setText("Selected Date: " + date);
+
+        /*//final TextView result = (TextView) findViewById(R.id.textview);
+        String text = "I tend to shy away from restaurant chains, but wherever I go, PF Chang&apos;s has solidly good food and, like Starbucks, they&apos;re reliable. We were staying in Boston for a week and after a long day and blah blah blah blah...";
+
+        if (text.length() > 20) {
+            text = text.substring(0, 20) + "...";
+            tv.setText(Html.fromHtml(text + "<font color='red'> <u>View More</u></font>"));
+        }*/
 
         SingletonAds.Companion.init(getApplicationContext());
     }
@@ -65,6 +75,7 @@ public class CalenderFurtherActivity extends AppCompatActivity {
             }
         } catch (Exception ex) {
             //handle exception
+            ex.printStackTrace();
         }
         return "";
     }

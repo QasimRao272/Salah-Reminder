@@ -9,6 +9,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
@@ -61,6 +62,10 @@ public class NotificationHelper extends ContextWrapper {
         b_i.putExtra("Yes", "No");
         PendingIntent a_i = PendingIntent.getBroadcast(this, 1, b_i, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        Intent iiiii = new Intent(getApplicationContext(), ExecutableService.class);
+        iiiii.putExtra("Yes", "Alarm");
+        PendingIntent p_iiiii = PendingIntent.getBroadcast(this, 1, iiiii, PendingIntent.FLAG_UPDATE_CURRENT);
+
         return new NotificationCompat.Builder(getApplicationContext(), channelID)
                 //.setContentTitle("Namaz Alert")
                 .setContentText("Are You Offering Namaz ?")
@@ -69,10 +74,12 @@ public class NotificationHelper extends ContextWrapper {
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setColor(R.color.colorPrimary)
                 .setOnlyAlertOnce(true)
-                .setWhen(System.currentTimeMillis())
                 .setTicker("Namaz Reminder Notification")
+                .setSound(Uri.parse("android.resource://"
+                        + getPackageName() + "/" + R.raw.azan))
                 /*.setContentIntent(contentIntent)*/
                 .addAction(R.mipmap.official_logo, getString(R.string.yes), actionIntent)
-                .addAction(R.mipmap.ic_kaba, getString(R.string.no), a_i);
+                .addAction(R.mipmap.ic_kaba, getString(R.string.no), a_i)
+                .addAction(R.mipmap.official_logo, "Off Alarm", p_iiiii);
     }
 }

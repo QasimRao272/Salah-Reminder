@@ -1,182 +1,572 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Fragments.NamazInfo">
+    android:background="@color/colorWhite"
+    tools:context=".Fragments.NamazInfoFragment">
 
     <LinearLayout
-        android:id="@+id/shape_layout"
+        android:id="@+id/shape"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@drawable/set_timing_shape"
         android:gravity="center"
-        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/tv_Namaz_Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Set Timings For Prayer"
+            android:text="Namaz Rakaat"
             android:textColor="@color/colorWhite"
             android:textSize="30dp"
             android:textStyle="bold" />
+
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/lower_screen"
+
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/shape_layout">
+        app:layout_constraintTop_toBottomOf="@id/shape">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/lower_screen">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/table_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:shrinkColumns="*"
+                android:stretchColumns="*">
 
-                <TextView
-                    android:id="@+id/fajar"
-                    android:layout_width="140dp"
-                    android:layout_height="30dp"
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:fontFamily="@font/arialnarrow7"
-                    android:text="@string/fajar"
-                    android:textSize="25dp" />
+                    android:background="@drawable/shape">
 
-                <TextView
-                    android:id="@+id/tvFajar"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/digital"
-                    android:text="00 : 00 AM"
-                    android:textColor="@color/red"
-                    android:textSize="20sp" />
+                    <TextView
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="20dip"
+                        android:text="Salaat"
+                        android:textColor="#fff" />
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="Sunnat"
+                        android:textColor="#fff" />
 
+                    <TextView
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="20dip"
+                        android:text="Farz"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="Sunnat"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="Nafil"
+                        android:textColor="#fff" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/fajar_raqat"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="Fajar"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="2"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="2"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:textColor="#000000" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/zuhar_rakaat"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="Zuhar"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="4"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="4"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="2"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="2"
+                        android:textColor="#297790" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/asar_rakaat"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="Asar"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="4"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="4"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:textColor="#000000" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/maghrib_rakaast"
+                        android:layout_width="100dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="Magrib"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="3"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="2"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="2"
+                        android:textColor="#297790" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/isha_rakaat"
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="Isha"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="4"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="4"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="2"
+                        android:textColor="#297790" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:gravity="center"
+                        android:padding="10dip"
+                        android:text="4"
+                        android:textColor="#297790" />
+
+                </TableRow>
+
+            </TableLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/Zuhar"
-                    android:layout_width="140dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="50dp"
-                    android:fontFamily="@font/arialnarrow7"
-                    android:text="Zuhar: "
-                    android:textSize="25dp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/namaz_info_shape"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="All Postures"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="30dp" />
+
+                <!--<TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15dp"
+                    android:text=" 1.\tTwo Sunnah \n 2.\tTwo Farz"/>-->
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="300dp"
+                    android:src="@drawable/complete_postures" />
 
                 <TextView
-                    android:id="@+id/tvZuhar"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/digital"
-
-                    android:text="00 : 00 AM"
-                    android:textColor="@color/red"
-                    android:textSize="20sp" />
+                    android:id="@+id/tvNewActivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripple_effect"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="Method of Salaat"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="30dp" />
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/Asar"
-                    android:layout_width="140dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="50dp"
-                    android:fontFamily="@font/arialnarrow7"
-                    android:text="Asar: "
-                    android:textSize="25dp" />
-
-                <TextView
-                    android:id="@+id/tvAsar"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/digital"
-                    android:text="00 : 00 AM"
-                    android:textColor="@color/red"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/Maghrib"
-                    android:layout_width="140dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="50dp"
-                    android:fontFamily="@font/arialnarrow7"
-                    android:text="Maghrib: "
-                    android:textSize="25dp" />
-
-                <TextView
-                    android:id="@+id/tvMaghrib"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/digital"
-                    android:text="00 : 00 AM"
-                    android:textColor="@color/red"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/Isha"
-                    android:layout_width="140dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="50dp"
-                    android:fontFamily="@font/arialnarrow7"
-                    android:text="Isha: "
-                    android:textSize="25dp" />
-
-                <TextView
-                    android:id="@+id/tvIsha"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/digital"
-                    android:text="00 : 00 AM"
-                    android:textColor="@color/red"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-
 
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <!--  xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" -->
+
+    <RelativeLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="#ffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <FrameLayout
+            android:id="@+id/ad_view_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+        </FrameLayout>
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- <LinearLayout
+         android:id="@+id/shape_layout"
+         android:layout_width="match_parent"
+         android:layout_height="100dp"
+         android:background="@drawable/set_timing_shape"
+         android:gravity="center"
+         android:orientation="horizontal"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent">
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Set Timings For Prayer"
+             android:textColor="@color/colorWhite"
+             android:textSize="30dp"
+             android:textStyle="bold" />
+     </LinearLayout>
+
+     <androidx.constraintlayout.widget.ConstraintLayout
+         android:id="@+id/lower_screen"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="20dp"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@id/shape_layout">
+
+
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="@id/lower_screen">
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content">
+
+                 <TextView
+                     android:id="@+id/fajar"
+                     android:layout_width="140dp"
+                     android:layout_height="30dp"
+                     android:layout_marginTop="20dp"
+                     android:fontFamily="@font/arialnarrow7"
+                     android:text="@string/fajar"
+                     android:textSize="25dp" />
+
+                 <TextView
+                     android:id="@+id/tvFajar"
+                     android:layout_width="80dp"
+                     android:layout_height="30dp"
+                     android:layout_gravity="center"
+                     android:layout_marginTop="10dp"
+                     android:fontFamily="@font/digital"
+                     android:text="00 : 00 AM"
+                     android:textColor="@color/red"
+                     android:textSize="20sp" />
+
+             </LinearLayout>
+
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content">
+
+                 <TextView
+                     android:id="@+id/Zuhar"
+                     android:layout_width="140dp"
+                     android:layout_height="30dp"
+                     android:layout_marginTop="50dp"
+                     android:fontFamily="@font/arialnarrow7"
+                     android:text="Zuhar: "
+                     android:textSize="25dp" />
+
+                 <TextView
+                     android:id="@+id/tvZuhar"
+                     android:layout_width="80dp"
+                     android:layout_height="30dp"
+                     android:layout_gravity="center"
+                     android:layout_marginTop="10dp"
+                     android:fontFamily="@font/digital"
+
+                     android:text="00 : 00 AM"
+                     android:textColor="@color/red"
+                     android:textSize="20sp" />
+
+             </LinearLayout>
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content">
+
+                 <TextView
+                     android:id="@+id/Asar"
+                     android:layout_width="140dp"
+                     android:layout_height="30dp"
+                     android:layout_marginTop="50dp"
+                     android:fontFamily="@font/arialnarrow7"
+                     android:text="Asar: "
+                     android:textSize="25dp" />
+
+                 <TextView
+                     android:id="@+id/tvAsar"
+                     android:layout_width="80dp"
+                     android:layout_height="30dp"
+                     android:layout_gravity="center"
+                     android:fontFamily="@font/digital"
+                     android:text="00 : 00 AM"
+                     android:textColor="@color/red"
+                     android:textSize="20sp" />
+
+             </LinearLayout>
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content">
+
+                 <TextView
+                     android:id="@+id/Maghrib"
+                     android:layout_width="140dp"
+                     android:layout_height="30dp"
+                     android:layout_marginTop="50dp"
+                     android:fontFamily="@font/arialnarrow7"
+                     android:text="Maghrib: "
+                     android:textSize="25dp" />
+
+                 <TextView
+                     android:id="@+id/tvMaghrib"
+                     android:layout_width="80dp"
+                     android:layout_height="30dp"
+                     android:layout_gravity="center"
+                     android:fontFamily="@font/digital"
+                     android:text="00 : 00 AM"
+                     android:textColor="@color/red"
+                     android:textSize="20sp" />
+             </LinearLayout>
+
+
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content">
+
+                 <TextView
+                     android:id="@+id/Isha"
+                     android:layout_width="140dp"
+                     android:layout_height="30dp"
+                     android:layout_marginTop="50dp"
+                     android:fontFamily="@font/arialnarrow7"
+                     android:text="Isha: "
+                     android:textSize="25dp" />
+
+                 <TextView
+                     android:id="@+id/tvIsha"
+                     android:layout_width="80dp"
+                     android:layout_height="30dp"
+                     android:layout_gravity="center"
+                     android:fontFamily="@font/digital"
+                     android:text="00 : 00 AM"
+                     android:textColor="@color/red"
+                     android:textSize="20sp" />
+
+             </LinearLayout>
+
+
+         </LinearLayout>
+
+     </androidx.constraintlayout.widget.ConstraintLayout>-->

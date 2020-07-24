@@ -14,8 +14,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.salahreminder.AdsManager.SingletonAds;
 import com.google.salahreminder.Fragments.CalenderFragment;
 import com.google.salahreminder.Fragments.HomeFragment;
+import com.google.salahreminder.Fragments.NamazInfoFragment;
 import com.google.salahreminder.R;
-import com.google.salahreminder.Fragments.NamazInfo;
 
 import static com.google.salahreminder.AdsManager.AdsKt.showBanner;
 import static com.google.salahreminder.AdsManager.AdsKt.showInterstitial;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         /*case R.id.setTimings:
                             showInterstitial(MainActivity.this);
-                            selectedFragment = new NamazInfo();
+                            selectedFragment = new NamazInfoFragment();
                             break;*/
                         case R.id.calender:
                             showInterstitial(MainActivity.this);
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case R.id.namaz_info:
                             showInterstitial(MainActivity.this);
-                            selectedFragment = new NamazInfo();
+                            selectedFragment = new NamazInfoFragment();
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragmentcontainer, selectedFragment).commit();

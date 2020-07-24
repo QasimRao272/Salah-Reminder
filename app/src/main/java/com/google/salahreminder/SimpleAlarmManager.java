@@ -28,7 +28,6 @@ public class SimpleAlarmManager {
     private static Boolean isInitWithId = Boolean.FALSE;
     private PendingIntent pendingIntent;
 
-
     public SimpleAlarmManager(Context context) {
         this.context = context;
         this.alarmIntent = new Intent(context, ExecutableService.class);
