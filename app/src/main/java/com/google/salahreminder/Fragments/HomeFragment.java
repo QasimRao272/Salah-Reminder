@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
         someHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                c_time.setText(new SimpleDateFormat("HH:mm ss a", Locale.US).format(new Date()));
+                c_time.setText(new SimpleDateFormat("hh:mm ss a", Locale.US).format(new Date()));
                 someHandler.postDelayed(this, 1000);
             }
         }, 10);

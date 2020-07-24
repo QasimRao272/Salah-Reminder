@@ -75,8 +75,6 @@ public class NotificationHelper extends ContextWrapper {
                 .setColor(R.color.colorPrimary)
                 .setOnlyAlertOnce(true)
                 .setTicker("Namaz Reminder Notification")
-                .setSound(Uri.parse("android.resource://"
-                        + getPackageName() + "/" + R.raw.azan))
                 /*.setContentIntent(contentIntent)*/
                 .addAction(R.mipmap.official_logo, getString(R.string.yes), actionIntent)
                 .addAction(R.mipmap.ic_kaba, getString(R.string.no), a_i)
