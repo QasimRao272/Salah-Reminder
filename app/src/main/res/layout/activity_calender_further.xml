@@ -207,9 +207,6 @@
 
     </LinearLayout>
 
-    <!--  xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" -->
-
     <RelativeLayout
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
@@ -230,6 +227,3 @@
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--
-        app:layout_constraintBottom_toTopOf="@id/bottom_layout"-->

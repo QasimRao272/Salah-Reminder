@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import static com.google.salahreminder.AdsManager.AdsKt.showBanner;
 import static com.google.salahreminder.AdsManager.AdsKt.showInterstitial;
 
 public class CalenderFurtherActivity extends AppCompatActivity {
@@ -42,7 +43,7 @@ public class CalenderFurtherActivity extends AppCompatActivity {
 
         FrameLayout banner_container = findViewById(R.id.ad_view_container);
         showInterstitial(CalenderFurtherActivity.this);
-
+        showBanner(CalenderFurtherActivity.this, banner_container);
         SingletonAds.Companion.init(getApplicationContext());
 
         initilise();
