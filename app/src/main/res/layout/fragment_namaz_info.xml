@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -28,7 +27,6 @@
             android:textStyle="bold" />
 
     </LinearLayout>
-
 
     <ScrollView
         android:id="@+id/scroll_view"
@@ -344,13 +342,6 @@
                     android:text="All Postures"
                     android:textColor="@color/colorWhite"
                     android:textSize="30dp" />
-
-                <!--<TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:textSize="15dp"
-                    android:text=" 1.\tTwo Sunnah \n 2.\tTwo Farz"/>-->
 
                 <ImageView
                     android:layout_width="wrap_content"
