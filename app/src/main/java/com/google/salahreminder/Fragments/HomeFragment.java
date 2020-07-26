@@ -2,9 +2,11 @@ package com.google.salahreminder.Fragments;
 
 import android.Manifest;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -17,6 +19,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -41,6 +44,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.salahreminder.Activities.ExecutableService;
+import com.google.salahreminder.Activities.MainActivity;
 import com.google.salahreminder.Activities.Namaz_Rakat_Activity;
 import com.google.salahreminder.Activities.SplashScreen;
 import com.google.salahreminder.PrayTimeClasess.AppController;
@@ -125,6 +129,8 @@ public class HomeFragment extends Fragment {
             tvLocation2.setText(Html.fromHtml(text2));
         }
 
+        // locationEnabled();
+
         //Runtime permissions
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -190,8 +196,6 @@ public class HomeFragment extends Fragment {
         Location myLocation = null;
         if (provider != null) {
             myLocation = locationManager.getLastKnownLocation(provider);
-        } else {
-            Toast.makeText(getContext(), "Turn On Your Location For Best Results", Toast.LENGTH_LONG).show();
         }
 
         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
@@ -422,6 +426,36 @@ public class HomeFragment extends Fragment {
         }
 
         return view;
+    }
+
+    private void locationEnabled() {
+        LocationManager lm = (LocationManager)
+                getActivity().getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!gps_enabled && !network_enabled) {
+            new AlertDialog.Builder(getContext())
+                    .setMessage("GPS Enable")
+                    .setPositiveButton("Go To Settings", new
+                            DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                    startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                                }
+                            })
+                    .setNegativeButton("Cancel", null)
+                    .show();
+        }
     }
 
     private void initialization() {

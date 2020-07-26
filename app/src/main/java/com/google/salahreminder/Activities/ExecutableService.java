@@ -27,7 +27,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class ExecutableService extends BroadcastReceiver {
     MediaPlayer mp = new MediaPlayer();
-    String off_Alarm;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -36,25 +35,18 @@ public class ExecutableService extends BroadcastReceiver {
         NotificationCompat.Builder nb = notificaitonHelper.getChannelNotification();
         notificaitonHelper.getManager().notify(1, nb.build());
 
-         /* Notification notification = nb.build();
+        mp = MediaPlayer.create(context, R.raw.azan);
+        mp.start();
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp.release();
+            }
+        });
+
+        /* Notification notification = nb.build();
         notification.defaults |= Notification.DEFAULT_VIBRATE;
         notification.defaults |= Notification.DEFAULT_SOUND;*/
 
-        mp = MediaPlayer.create(context, R.raw.azan);
-        mp.start();
-
-        off_Alarm = intent.getStringExtra("Off_Alarm");
-        if (off_Alarm != null) {
-            Toast.makeText(notificaitonHelper, "Off Alarm", Toast.LENGTH_SHORT).show();
-            mp.stop();
-            mp.release();
-            setAppComponentEnabled(context, ExecutableService.class, false);
-        }
-    }
-
-    public static void setAppComponentEnabled(@NonNull final Context context, @NonNull final Class<?> componentClass, final boolean enable) {
-        final PackageManager pm = context.getPackageManager();
-        final int enableFlag = enable ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-        pm.setComponentEnabledSetting(new ComponentName(context, componentClass), enableFlag, PackageManager.DONT_KILL_APP);
     }
 }
