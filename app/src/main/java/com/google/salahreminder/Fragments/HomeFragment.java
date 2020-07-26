@@ -78,6 +78,8 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
     String month, year, date;
     String ff, zz, mm, ii, aa, sun_rise_sun, sunset_sun_set;
     TextView c_time;
+    SharedPreferences.Editor editor2;
+    String provider = null;
 
     @Nullable
     @Override
@@ -85,6 +87,8 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         initialization();
+
+        editor2 = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
 
         final Handler someHandler = new Handler(getMainLooper());
         someHandler.postDelayed(new Runnable() {
@@ -115,6 +119,7 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
 
         String text1 = loc;
         String text2 = loc;
+
         if (text1.length() > 20) {
             text1 = text1.substring(0, 20);
             tvLocation1.setText(Html.fromHtml(text1/*"<font color='red'> <u>View More</u></font>"*/));
@@ -169,7 +174,9 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
         Criteria criteria = new Criteria();
 
         // Get the name of the best provider
-        String provider = locationManager.getBestProvider(criteria, true);
+        if (locationManager != null) {
+            provider = locationManager.getBestProvider(criteria, true);
+        }
 
         // Get Current Location
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -223,6 +230,11 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                 String alaramtimesplit_fajar[] = alaramtime_fajar.split(":");
                                 int firstval_fajar = Integer.parseInt(alaramtimesplit_fajar[0]);    //4
                                 int secondval_fajar = Integer.parseInt(alaramtimesplit_fajar[1]);   //05
+
+                                editor2.putLong("f_h", firstval_fajar);
+                                editor2.putLong("f_m", secondval_fajar);
+                                editor2.apply();
+
                                 //Toast.makeText(getContext(), "" + firstval_fajar + " : " + secondval_fajar, Toast.LENGTH_SHORT).show();
 
                                 Calendar c = Calendar.getInstance();
@@ -233,6 +245,8 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                 if (getContext() != null) {
                                     AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
                                     Intent intent = new Intent(getContext(), ExecutableService.class);
+
+                                    intent.putExtra("namaz_time", "fajar");
 
                                     PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 109833, intent, 0);
                                     if (c.before(Calendar.getInstance())) {
@@ -252,6 +266,10 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                 String alaramtimesplit_zuhar[] = alaramtime_zuhar.split(":");
                                 int firstval_zuhar = Integer.parseInt(alaramtimesplit_zuhar[0]);//4
                                 int secondval_zuhar = Integer.parseInt(alaramtimesplit_zuhar[1]);   //05
+
+                                editor2.putLong("z_h", firstval_zuhar);
+                                editor2.putLong("z_m", secondval_zuhar);
+                                editor2.apply();
                                 //Toast.makeText(getContext(), "" + firstval_zuhar + " : " + secondval_zuhar, Toast.LENGTH_SHORT).show();
 
                                 Calendar c2 = Calendar.getInstance();
@@ -262,6 +280,8 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                 if (getContext() != null) {
                                     AlarmManager alarmManager_zuhar = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
                                     Intent intent_zuhar = new Intent(getContext(), ExecutableService.class);
+
+                                    intent_zuhar.putExtra("namaz_time", "zuhar");
 
                                     PendingIntent pendingIntent_zuhar = PendingIntent.getBroadcast(getContext(), 675483, intent_zuhar, 0);
                                     if (c2.before(Calendar.getInstance())) {
@@ -281,6 +301,10 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                 String alaramtimesplit_asar[] = alaramtime_asar.split(":");
                                 int firstval_asar = Integer.parseInt(alaramtimesplit_asar[0]);//4
                                 int secondval_asar = Integer.parseInt(alaramtimesplit_asar[1]);   //05
+
+                                editor2.putLong("a_h", firstval_asar);
+                                editor2.putLong("a_m", secondval_asar);
+                                editor2.apply();
                                 //Toast.makeText(getContext(), "" + firstval_zuhar + " : " + secondval_zuhar, Toast.LENGTH_SHORT).show();
 
                                 Calendar c3 = Calendar.getInstance();
@@ -310,6 +334,10 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                 String alaramtimesplit_maghrib[] = alaramtime_maghrib.split(":");
                                 int firstval_maghrib = Integer.parseInt(alaramtimesplit_maghrib[0]);//4
                                 int secondval_maghrib = Integer.parseInt(alaramtimesplit_maghrib[1]);   //05
+
+                                editor2.putLong("m_h", firstval_maghrib);
+                                editor2.putLong("m_m", secondval_maghrib);
+                                editor2.apply();
                                 //Toast.makeText(getContext(), "" + firstval_zuhar + " : " + secondval_zuhar, Toast.LENGTH_SHORT).show();
 
                                 Calendar c4 = Calendar.getInstance();
@@ -339,6 +367,11 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                 String alaramtimesplit_isha[] = alaramtime_isha.split(":");
                                 int firstval_isha = Integer.parseInt(alaramtimesplit_isha[0]);//4
                                 int secondval_isha = Integer.parseInt(alaramtimesplit_isha[1]);   //05
+
+                                editor2.putLong("i_h", firstval_isha);
+                                editor2.putLong("i_m", secondval_isha);
+                                editor2.apply();
+
                                 //Toast.makeText(getContext(), "" + firstval_zuhar + " : " + secondval_zuhar, Toast.LENGTH_SHORT).show();
 
                                 Calendar c5 = Calendar.getInstance();
@@ -349,6 +382,8 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                 if (getContext() != null) {
                                     AlarmManager alarmManager_isha = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
                                     Intent intent_isha = new Intent(getContext(), ExecutableService.class);
+
+                                    intent_isha.putExtra("namaz_time", "isha");
 
                                     PendingIntent pendingIntent_isha = PendingIntent.getBroadcast(getContext(), 764687, intent_isha, 0);
                                     if (c5.before(Calendar.getInstance())) {

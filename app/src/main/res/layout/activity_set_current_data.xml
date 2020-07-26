@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    android:orientation="vertical"
-    tools:context=".Activities.CalenderFurtherActivity">
+    tools:context=".Activities.SetCurrentData">
 
     <LinearLayout
         android:id="@+id/shape"
@@ -22,7 +20,7 @@
             android:id="@+id/tv_Namaz_Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="View / Update Prayers"
+            android:text="Offered Prayers"
             android:textColor="@color/colorWhite"
             android:textSize="30dp"
             android:textStyle="bold" />
@@ -33,7 +31,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="20dp"
+        android:gravity="center"
         android:orientation="vertical"
+        android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@id/bottom_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,41 +43,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/shape"
-            android:padding="15dp">
-
-            <TextView
-                android:id="@+id/current_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:text="Day: "
-                android:textColor="@color/colorWhite"
-                android:textSize="30dp" />
+            android:layout_marginBottom="20dp">
 
             <TextView
                 android:id="@+id/tvDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10 - "
-                android:textColor="@color/colorWhite"
+                android:layout_marginLeft="40dp"
+                android:text="Day"
                 android:textSize="30dp" />
 
             <TextView
                 android:id="@+id/tvMonth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="6 - "
-                android:textColor="@color/colorWhite"
+                android:text="Month"
                 android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/tvYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2020"
-                android:textColor="@color/colorWhite"
+                android:text="Year"
                 android:textSize="30sp" />
         </LinearLayout>
 
@@ -91,18 +78,22 @@
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:text="Fajar"
-                android:textColor="@color/colorPrimary"
                 android:textSize="30dp" />
 
-            <CheckBox
+            <Button
                 android:id="@+id/fajar_btn_yes"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/red_border"
-                android:padding="5dp"
-                android:text="Yes / No"
+                android:layout_height="wrap_content"
+                android:text="Yes"
                 android:textSize="15dp" />
 
+            <Button
+                android:id="@+id/fajar_btn_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="No"
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -116,18 +107,22 @@
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:text="Zuhar"
-                android:textColor="@color/colorPrimary"
                 android:textSize="30dp" />
 
-            <CheckBox
+            <Button
                 android:id="@+id/zuhar_btn_yes"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/red_border"
-                android:padding="5dp"
-                android:text="Yes / No"
+                android:layout_height="wrap_content"
+                android:text="Yes"
                 android:textSize="15dp" />
 
+            <Button
+                android:id="@+id/zuhar_btn_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="No"
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -141,18 +136,22 @@
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:text="Asar"
-                android:textColor="@color/colorPrimary"
                 android:textSize="30dp" />
 
-            <CheckBox
+            <Button
                 android:id="@+id/asar_btn_yes"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/red_border"
-                android:padding="5dp"
-                android:text="Yes / No"
+                android:layout_height="wrap_content"
+                android:text="Yes"
                 android:textSize="15dp" />
 
+            <Button
+                android:id="@+id/asar_btn_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="No"
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -166,18 +165,22 @@
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:text="Maghrib"
-                android:textColor="@color/colorPrimary"
                 android:textSize="30dp" />
 
-            <CheckBox
+            <Button
                 android:id="@+id/maghrib_btn_yes"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/red_border"
-                android:padding="5dp"
-                android:text="Yes / No"
+                android:layout_height="wrap_content"
+                android:text="Yes"
                 android:textSize="15dp" />
 
+            <Button
+                android:id="@+id/maghrib_btn_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="No"
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -191,24 +194,25 @@
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:text="Isha"
-                android:textColor="@color/colorPrimary"
                 android:textSize="30dp" />
 
-            <CheckBox
+            <Button
                 android:id="@+id/isha_btn_yes"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/red_border"
-                android:padding="5dp"
-                android:text="Yes / No"
+                android:layout_height="wrap_content"
+                android:text="Yes"
                 android:textSize="15dp" />
 
+            <Button
+                android:id="@+id/isha_btn_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="No"
+                android:textSize="15dp" />
         </LinearLayout>
 
     </LinearLayout>
-
-    <!--  xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" -->
 
     <RelativeLayout
         android:id="@+id/bottom_layout"
@@ -227,9 +231,7 @@
             android:layout_centerInParent="true">
 
         </FrameLayout>
+
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--
-        app:layout_constraintBottom_toTopOf="@id/bottom_layout"-->
