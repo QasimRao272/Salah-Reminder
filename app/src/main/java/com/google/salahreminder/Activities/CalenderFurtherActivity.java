@@ -2,11 +2,8 @@ package com.google.salahreminder.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
-import android.text.Html;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
@@ -25,7 +22,6 @@ import java.net.NetworkInterface;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -40,7 +36,6 @@ public class CalenderFurtherActivity extends AppCompatActivity {
     TextView txt_View_Date;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calender_further);
@@ -71,9 +66,6 @@ public class CalenderFurtherActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                //Toast.makeText(CalenderFurtherActivity.this, "" + snapshot, Toast.LENGTH_LONG).show();
-
                 if (snapshot.exists()) {
                     if (snapshot.child("Fajar").exists()) {
                         String fajar = snapshot.child("Fajar").getValue().toString();
@@ -105,6 +97,8 @@ public class CalenderFurtherActivity extends AppCompatActivity {
                             checkBoxishaYes.setChecked(true);
                         }
                     }
+                } else {
+                    Toast.makeText(CalenderFurtherActivity.this, "No Data Found !", Toast.LENGTH_SHORT).show();
                 }
             }
 

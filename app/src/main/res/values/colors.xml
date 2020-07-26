@@ -2,13 +2,11 @@
 <resources>
     <color name="colorPrimary">#116F8A</color>
     <color name="colorPrimaryDark">#116F8A</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#116F8A</color>
     <color name="red">#FF0000</color>
     <color name="silver">#cacaca</color>
     <color name="dark_silver">#a0a0a0</color>
     <color name="texr_color">#969696</color>
     <color name="colorWhite">#fff</color>
-
-
-
+    <color name="green">#66b572</color>
 </resources>

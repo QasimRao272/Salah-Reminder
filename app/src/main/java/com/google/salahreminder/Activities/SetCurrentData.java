@@ -3,11 +3,14 @@ package com.google.salahreminder.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,15 +22,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.salahreminder.R;
 
 import java.net.NetworkInterface;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
-public class SetCurrentData extends AppCompatActivity implements View.OnClickListener {
+public class SetCurrentData extends AppCompatActivity {
     String year, month, day;
-    TextView tvDay, tvMonth, tvYear;
-    Button fajarBtnYes, fajarBtnNo, zuharBtnYes, zuharBtnNo, asarBtnYes, asarBtnNo;
-    Button maghribBtnYes, maghribBtnNo, ishaBtnYes, ishaBtnNo;
+    TextView tvDay, tvMonth, tvYear, txt_View_Date;
+    CheckBox fajarBtnYes, zuharBtnYes, asarBtnYes, maghribBtnYes, ishaBtnYes;
     DatabaseReference mRef;
 
     @Override
@@ -45,42 +49,44 @@ public class SetCurrentData extends AppCompatActivity implements View.OnClickLis
         tvDay.setText(day);
         tvYear.setText(" - " + year);
         tvMonth.setText(" - " + month);
+        String weekday_name = new SimpleDateFormat("EEEE", Locale.ENGLISH).format(System.currentTimeMillis());
+        txt_View_Date.setText(weekday_name);
 
         mRef = FirebaseDatabase.getInstance().getReference("Offered_Prayer").child(getMacAddr()).child(String.valueOf(year))
                 .child(String.valueOf(month)).child(String.valueOf(day));
-
         mRef.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     if (snapshot.child("Fajar").exists()) {
-                        if (snapshot.child("Fajar").getValue().toString().equals("Yes")) {
-                            fajarBtnYes.setTextColor(Color.GREEN);
-                            fajarBtnYes.setBackgroundResource(R.drawable.border);
+                        String fajar = snapshot.child("Fajar").getValue().toString();
+                        if (fajar.equals("Yes")) {
+                            fajarBtnYes.setChecked(true);
                         }
                     }
                     if (snapshot.child("Zuhar").exists()) {
-                        if (snapshot.child("Zuhar").getValue().toString().equals("Yes")) {
-                            zuharBtnYes.setTextColor(Color.GREEN);
-                            zuharBtnYes.setBackgroundResource(R.drawable.border);
+                        String zuhar = snapshot.child("Zuhar").getValue().toString();
+                        if (zuhar.equals("Yes")) {
+                            zuharBtnYes.setChecked(true);
                         }
                     }
                     if (snapshot.child("Asar").exists()) {
-                        if (snapshot.child("Asar").getValue().toString().equals("Yes")) {
-                            asarBtnYes.setTextColor(Color.GREEN);
-                            asarBtnYes.setBackgroundResource(R.drawable.border);
+                        String asar = snapshot.child("Asar").getValue().toString();
+                        if (asar.equals("Yes")) {
+                            asarBtnYes.setChecked(true);
                         }
                     }
                     if (snapshot.child("Maghrib").exists()) {
-                        if (snapshot.child("MAghrib").getValue().toString().equals("Yes")) {
-                            maghribBtnYes.setTextColor(Color.GREEN);
-                            maghribBtnNo.setBackgroundResource(R.drawable.border);
+                        String maghrib = snapshot.child("Maghrib").getValue().toString();
+                        if (maghrib.equals("Yes")) {
+                            maghribBtnYes.setChecked(true);
                         }
                     }
                     if (snapshot.child("Isha").exists()) {
-                        if (snapshot.child("Isha").getValue().toString().equals("Yes")) {
-                            ishaBtnYes.setTextColor(Color.GREEN);
-                            ishaBtnYes.setBackgroundResource(R.drawable.green_border);
+                        String isha = snapshot.child("Isha").getValue().toString();
+                        if (isha.equals("Yes")) {
+                            ishaBtnYes.setChecked(true);
                         }
                     }
                 }
@@ -92,52 +98,70 @@ public class SetCurrentData extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-        fajarBtnYes.setOnClickListener(this);
-        fajarBtnNo.setOnClickListener(this);
-        zuharBtnYes.setOnClickListener(this);
-        zuharBtnNo.setOnClickListener(this);
-        asarBtnYes.setOnClickListener(this);
-        asarBtnNo.setOnClickListener(this);
-        maghribBtnYes.setOnClickListener(this);
-        maghribBtnNo.setOnClickListener(this);
-        ishaBtnYes.setOnClickListener(this);
-        ishaBtnNo.setOnClickListener(this);
-    }
+        fajarBtnYes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (fajarBtnYes.isChecked()) {
+                    mRef.child("Fajar").setValue("Yes");
+                    fajarBtnYes.setBackgroundResource(R.drawable.green_border);
+                } else {
+                    mRef.child("Fajar").setValue("No");
+                    fajarBtnYes.setBackgroundResource(R.drawable.red_border);
+                }
+            }
+        });
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.fajar_btn_yes:
-                mRef.child("Fajar").setValue("Yes");
-                break;
-            case R.id.fajar_btn_no:
-                mRef.child("Fajar").setValue("No");
-                break;
-            case R.id.zuhar_btn_yes:
-                mRef.child("Zuhar").setValue("Yes");
-                break;
-            case R.id.zuhar_btn_no:
-                mRef.child("Zuhar").setValue("No");
-                break;
-            case R.id.asar_btn_yes:
-                mRef.child("Asar").setValue("Yes");
-                break;
-            case R.id.asar_btn_no:
-                mRef.child("Asar").setValue("No");
-                break;
-            case R.id.maghrib_btn_yes:
-                mRef.child("Maghrib").setValue("Yes");
-                break;
-            case R.id.maghrib_btn_no:
-                mRef.child("Maghrib").setValue("No");
-                break;
-            case R.id.isha_btn_yes:
-                mRef.child("Isha").setValue("Yes");
-                break;
-            case R.id.isha_btn_no:
-                mRef.child("Isha").setValue("No");
-                break;
-        }
+        zuharBtnYes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (zuharBtnYes.isChecked()) {
+                    mRef.child("Zuhar").setValue("Yes");
+                    fajarBtnYes.setBackgroundResource(R.drawable.green_border);
+                } else {
+                    mRef.child("Zuhar").setValue("No");
+                    zuharBtnYes.setBackgroundResource(R.drawable.red_border);
+                }
+            }
+        });
+
+        asarBtnYes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (asarBtnYes.isChecked()) {
+                    mRef.child("Asar").setValue("Yes");
+                    asarBtnYes.setBackgroundResource(R.drawable.green_border);
+                } else {
+                    mRef.child("Asar").setValue("No");
+                    asarBtnYes.setBackgroundResource(R.drawable.red_border);
+                }
+            }
+        });
+
+        ishaBtnYes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (ishaBtnYes.isChecked()) {
+                    mRef.child("Isha").setValue("Yes");
+                    ishaBtnYes.setBackgroundResource(R.drawable.green_border);
+                } else {
+                    mRef.child("Isha").setValue("No");
+                    ishaBtnYes.setBackgroundResource(R.drawable.red_border);
+                }
+            }
+        });
+        maghribBtnYes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (maghribBtnYes.isChecked()) {
+                    mRef.child("Maghrib").setValue("Yes");
+                    maghribBtnYes.setBackgroundResource(R.drawable.green_border);
+                } else {
+                    mRef.child("Maghrib").setValue("No");
+                    maghribBtnYes.setBackgroundResource(R.drawable.red_border);
+                }
+            }
+        });
+
     }
 
     private void initilize() {
@@ -145,15 +169,11 @@ public class SetCurrentData extends AppCompatActivity implements View.OnClickLis
         tvDay = findViewById(R.id.tvDay);
         tvYear = findViewById(R.id.tvYear);
         fajarBtnYes = findViewById(R.id.fajar_btn_yes);
-        fajarBtnNo = findViewById(R.id.fajar_btn_no);
         zuharBtnYes = findViewById(R.id.zuhar_btn_yes);
-        zuharBtnNo = findViewById(R.id.zuhar_btn_no);
         asarBtnYes = findViewById(R.id.asar_btn_yes);
-        asarBtnNo = findViewById(R.id.asar_btn_no);
         maghribBtnYes = findViewById(R.id.maghrib_btn_yes);
-        maghribBtnNo = findViewById(R.id.maghrib_btn_no);
         ishaBtnYes = findViewById(R.id.isha_btn_yes);
-        ishaBtnNo = findViewById(R.id.isha_btn_no);
+        txt_View_Date = findViewById(R.id.current_day);
     }
 
     public static String getMacAddr() {

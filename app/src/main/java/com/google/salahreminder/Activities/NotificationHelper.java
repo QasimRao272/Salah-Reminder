@@ -29,7 +29,6 @@ public class NotificationHelper extends ContextWrapper {
         }
     }
 
-
     @TargetApi(Build.VERSION_CODES.O)
     private void createChannel() {
         NotificationChannel channel = new NotificationChannel(channelID, channelName,
@@ -48,22 +47,12 @@ public class NotificationHelper extends ContextWrapper {
     @SuppressLint("ResourceAsColor")
     public NotificationCompat.Builder getChannelNotification() {
 
-        /*PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);*/
-
-        /*Intent contentIntent = new Intent(getApplicationContext(), MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, activityIntent, 0);*/
-
         Intent activityIntent = new Intent(getApplicationContext(), SetCurrentData.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, activityIntent, 0);
 
         Intent broadcastIntent = new Intent(getApplicationContext(), ExecutableService.class);
         broadcastIntent.putExtra("Off_Alarm", "Off_Alarm");
         PendingIntent offAlarmPendingIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        /*Intent b_i = new Intent(getApplicationContext(), ExecutableService.class);
-        b_i.putExtra("No", "No");
-        PendingIntent noPendingIntent = PendingIntent.getBroadcast(this, 1, b_i, PendingIntent.FLAG_UPDATE_CURRENT);*/
 
         return new NotificationCompat.Builder(getApplicationContext(), channelID)
                 .setContentTitle("Namaz Time Alert")

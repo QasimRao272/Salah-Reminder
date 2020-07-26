@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Namaz Reminder</string>
-    <string name="Open">Open</string>
-    <string name="Close">Close</string>
+    <!--<string name="Open">Open</string>
+    <string name="Close">Close</string>-->
     <string name="channel_name">chanel_name</string>
     <string name="fajar">Fajar:</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
+    <!--<string name="yes">Yes</string>
+    <string name="no">No</string>-->
 
     <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="admob_banner_id">ca-app-pub-3940256099942544/6300978111</string>

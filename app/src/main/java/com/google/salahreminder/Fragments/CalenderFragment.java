@@ -25,11 +25,6 @@ public class CalenderFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calender, container, false);
 
-        Toolbar toolbar = view.findViewById(R.id.tool_bar);
-        TextView textView = toolbar.findViewById(R.id.toolbar_text);
-        textView.setText("Calender");
-
-
         calendarView = view.findViewById(R.id.calender_view);
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override

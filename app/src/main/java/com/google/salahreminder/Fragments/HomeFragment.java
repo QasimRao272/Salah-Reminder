@@ -65,12 +65,12 @@ import static android.content.Context.LOCATION_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static android.os.Looper.getMainLooper;
 
-public class HomeFragment extends Fragment /*implements LocationListener*/ {
-    private TextView tvFajar, tvZuhar, tvAsar, tvMaghrib, tvIsha, txt_View_Day, txt_View_Date, tvSunrise, tvSunset, tvLocation1, tvLocation2;
+public class HomeFragment extends Fragment {
+    private TextView tvFajar, tvZuhar, tvAsar, tvMaghrib, tvIsha, txt_View_Day,
+            txt_View_Date, tvSunrise, tvSunset, tvLocation1, tvLocation2;
     private View view;
     private String MY_PREFS_NAME = "Namaz_Reminder";
     private SharedPreferences prefs;
-    private String fajar, zuhar, asar, maghrib, isha, sunrise, sunset;
     private TextView fajar_fajar, zuhur_zuhar, asar_asar, maghrib_maghrib, isha_isha;
     long current_h, current_m;
     String tag_json_obj = "json_obj_req";
@@ -78,8 +78,6 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
     String month, year, date;
     String ff, zz, mm, ii, aa, sun_rise_sun, sunset_sun_set;
     TextView c_time;
-    SharedPreferences.Editor editor2;
-    String provider = null;
 
     @Nullable
     @Override
@@ -87,8 +85,6 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         initialization();
-
-        editor2 = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
 
         final Handler someHandler = new Handler(getMainLooper());
         someHandler.postDelayed(new Runnable() {
@@ -122,18 +118,18 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
 
         if (text1.length() > 20) {
             text1 = text1.substring(0, 20);
-            tvLocation1.setText(Html.fromHtml(text1/*"<font color='red'> <u>View More</u></font>"*/));
+            tvLocation1.setText(Html.fromHtml(text1));
         }
         if (text2.length() >= 40) {
             text2 = text2.substring(20, 40) + "...";
-            tvLocation2.setText(Html.fromHtml(text2/*"<font color='red'> <u>View More</u></font>"*/));
+            tvLocation2.setText(Html.fromHtml(text2));
         }
 
         //Runtime permissions
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION
+                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
             }, 100);
         }
 
@@ -174,13 +170,13 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
         Criteria criteria = new Criteria();
 
         // Get the name of the best provider
-        if (locationManager != null) {
-            provider = locationManager.getBestProvider(criteria, true);
-        }
+        String provider = null;
+        provider = locationManager != null ? locationManager.getBestProvider(criteria, true) : null;
 
         // Get Current Location
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && getActivity().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    getActivity().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    Activity#requestPermissions
                 // here to request the missing permissions, and then overriding
@@ -191,7 +187,12 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                 //return;
             }
         }
-        Location myLocation = locationManager.getLastKnownLocation(provider);
+        Location myLocation = null;
+        if (provider != null) {
+            myLocation = locationManager.getLastKnownLocation(provider);
+        } else {
+            Toast.makeText(getContext(), "Turn On Your Location For Best Results", Toast.LENGTH_LONG).show();
+        }
 
         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
         List<Address> addresses = null;
@@ -200,7 +201,6 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                 addresses = geocoder.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1);
                 address = addresses.get(0).getAddressLine(0);
                 Log.d("Location", "onLocationChanged: " + address);
-                //Toast.makeText(getContext(), "" + address, Toast.LENGTH_SHORT).show();
                 Toast.makeText(getContext(), "Location Updated!", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
@@ -231,12 +231,6 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                 int firstval_fajar = Integer.parseInt(alaramtimesplit_fajar[0]);    //4
                                 int secondval_fajar = Integer.parseInt(alaramtimesplit_fajar[1]);   //05
 
-                                editor2.putLong("f_h", firstval_fajar);
-                                editor2.putLong("f_m", secondval_fajar);
-                                editor2.apply();
-
-                                //Toast.makeText(getContext(), "" + firstval_fajar + " : " + secondval_fajar, Toast.LENGTH_SHORT).show();
-
                                 Calendar c = Calendar.getInstance();
                                 c.set(Calendar.HOUR_OF_DAY, firstval_fajar);
                                 c.set(Calendar.MINUTE, secondval_fajar);
@@ -246,8 +240,6 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                     AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
                                     Intent intent = new Intent(getContext(), ExecutableService.class);
 
-                                    intent.putExtra("namaz_time", "fajar");
-
                                     PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 109833, intent, 0);
                                     if (c.before(Calendar.getInstance())) {
                                         c.add(Calendar.DATE, 1);
@@ -256,21 +248,16 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                     if (alarmManager != null) {
                                         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
                                                 c.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent); //Repeat every 24 hours
-                                        //Toast.makeText(getContext(), "Alarm Set Fajar!", Toast.LENGTH_SHORT).show();
                                         Log.d("Fajar", "onResponse: Alarm Set Fajar");
                                     }
                                 }
                                 ///////////////////////////////////////////////
+
                                 /////////////////////////////////////////////
                                 String alaramtime_zuhar = zz;
                                 String alaramtimesplit_zuhar[] = alaramtime_zuhar.split(":");
-                                int firstval_zuhar = Integer.parseInt(alaramtimesplit_zuhar[0]);//4
+                                int firstval_zuhar = Integer.parseInt(alaramtimesplit_zuhar[0]);    //4
                                 int secondval_zuhar = Integer.parseInt(alaramtimesplit_zuhar[1]);   //05
-
-                                editor2.putLong("z_h", firstval_zuhar);
-                                editor2.putLong("z_m", secondval_zuhar);
-                                editor2.apply();
-                                //Toast.makeText(getContext(), "" + firstval_zuhar + " : " + secondval_zuhar, Toast.LENGTH_SHORT).show();
 
                                 Calendar c2 = Calendar.getInstance();
                                 c2.set(Calendar.HOUR_OF_DAY, firstval_zuhar);
@@ -280,8 +267,6 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                 if (getContext() != null) {
                                     AlarmManager alarmManager_zuhar = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
                                     Intent intent_zuhar = new Intent(getContext(), ExecutableService.class);
-
-                                    intent_zuhar.putExtra("namaz_time", "zuhar");
 
                                     PendingIntent pendingIntent_zuhar = PendingIntent.getBroadcast(getContext(), 675483, intent_zuhar, 0);
                                     if (c2.before(Calendar.getInstance())) {
@@ -302,11 +287,6 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                 int firstval_asar = Integer.parseInt(alaramtimesplit_asar[0]);//4
                                 int secondval_asar = Integer.parseInt(alaramtimesplit_asar[1]);   //05
 
-                                editor2.putLong("a_h", firstval_asar);
-                                editor2.putLong("a_m", secondval_asar);
-                                editor2.apply();
-                                //Toast.makeText(getContext(), "" + firstval_zuhar + " : " + secondval_zuhar, Toast.LENGTH_SHORT).show();
-
                                 Calendar c3 = Calendar.getInstance();
                                 c3.set(Calendar.HOUR_OF_DAY, firstval_asar);
                                 c3.set(Calendar.MINUTE, secondval_asar);
@@ -321,11 +301,11 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                         c3.add(Calendar.DATE, 1);
                                     }
 
-                                    if (alaramtime_zuhar != null) {
+                                    if (alarmManager_asar != null) {
                                         alarmManager_asar.setRepeating(AlarmManager.RTC_WAKEUP,
                                                 c3.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent_asar); //Repeat every 24 hours
                                         //Toast.makeText(getContext(), "Alarm Set Asar!", Toast.LENGTH_SHORT).show();
-                                        Log.d("Zuhar", "onResponse: Alarm Set Zuhar");
+                                        Log.d("Asar", "onResponse: Alarm Set Asar");
                                     }
                                 }
                                 ///////////////////////////////////////////////
@@ -334,11 +314,6 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                 String alaramtimesplit_maghrib[] = alaramtime_maghrib.split(":");
                                 int firstval_maghrib = Integer.parseInt(alaramtimesplit_maghrib[0]);//4
                                 int secondval_maghrib = Integer.parseInt(alaramtimesplit_maghrib[1]);   //05
-
-                                editor2.putLong("m_h", firstval_maghrib);
-                                editor2.putLong("m_m", secondval_maghrib);
-                                editor2.apply();
-                                //Toast.makeText(getContext(), "" + firstval_zuhar + " : " + secondval_zuhar, Toast.LENGTH_SHORT).show();
 
                                 Calendar c4 = Calendar.getInstance();
                                 c4.set(Calendar.HOUR_OF_DAY, firstval_maghrib);
@@ -354,11 +329,10 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                         c4.add(Calendar.DATE, 1);
                                     }
 
-                                    if (alaramtime_zuhar != null) {
+                                    if (alaramtime_maghrib != null) {
                                         alarmManager_maghrib.setRepeating(AlarmManager.RTC_WAKEUP,
                                                 c4.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent_zuhar); //Repeat every 24 hours
-                                        //Toast.makeText(getContext(), "Alarm Set Maghrib!", Toast.LENGTH_SHORT).show();
-                                        Log.d("Zuhar", "onResponse: Alarm Set Zuhar");
+                                        Log.d("Maghrib", "onResponse: Alarm Set Maghrib");
                                     }
                                 }
                                 ///////////////////////////////////////////////
@@ -367,12 +341,6 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                 String alaramtimesplit_isha[] = alaramtime_isha.split(":");
                                 int firstval_isha = Integer.parseInt(alaramtimesplit_isha[0]);//4
                                 int secondval_isha = Integer.parseInt(alaramtimesplit_isha[1]);   //05
-
-                                editor2.putLong("i_h", firstval_isha);
-                                editor2.putLong("i_m", secondval_isha);
-                                editor2.apply();
-
-                                //Toast.makeText(getContext(), "" + firstval_zuhar + " : " + secondval_zuhar, Toast.LENGTH_SHORT).show();
 
                                 Calendar c5 = Calendar.getInstance();
                                 c5.set(Calendar.HOUR_OF_DAY, firstval_isha);
@@ -383,8 +351,6 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                     AlarmManager alarmManager_isha = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
                                     Intent intent_isha = new Intent(getContext(), ExecutableService.class);
 
-                                    intent_isha.putExtra("namaz_time", "isha");
-
                                     PendingIntent pendingIntent_isha = PendingIntent.getBroadcast(getContext(), 764687, intent_isha, 0);
                                     if (c5.before(Calendar.getInstance())) {
                                         c5.add(Calendar.DATE, 1);
@@ -393,8 +359,7 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
                                     if (alaramtime_isha != null) {
                                         alarmManager_isha.setRepeating(AlarmManager.RTC_WAKEUP,
                                                 c5.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent_isha); //Repeat every 24 hours
-                                        Toast.makeText(getContext(), "Alarm Set Isha!", Toast.LENGTH_SHORT).show();
-                                        Log.d("Zuhar", "onResponse: Alarm Set Zuhar");
+                                        Log.d("Isha", "onResponse: Alarm Set Isha");
                                     }
                                 }
                                 ///////////////////////////////////////////////
@@ -457,20 +422,6 @@ public class HomeFragment extends Fragment /*implements LocationListener*/ {
         }
 
         return view;
-    }
-
-    private void gettingData() {
-        fajar = prefs.getString("Fajar", "Set Time");
-        zuhar = prefs.getString("Zuhar", "Set Time");
-        asar = prefs.getString("Asar", "Set Time");
-        maghrib = prefs.getString("Maghrib", "Set Time");
-        isha = prefs.getString("Isha", "Set Time");
-
-        tvFajar.setText(fajar);
-        tvZuhar.setText(zuhar);
-        tvAsar.setText(asar);
-        tvMaghrib.setText(maghrib);
-        tvIsha.setText(isha);
     }
 
     private void initialization() {
