@@ -43,10 +43,5 @@ public class ExecutableService extends BroadcastReceiver {
                 mp.release();
             }
         });
-
-        /* Notification notification = nb.build();
-        notification.defaults |= Notification.DEFAULT_VIBRATE;
-        notification.defaults |= Notification.DEFAULT_SOUND;*/
-
     }
 }

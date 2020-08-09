@@ -49,7 +49,7 @@ public class SplashScreen extends AppCompatActivity {
 
         FrameLayout banner_container = findViewById(R.id.ad_view_container);
         SingletonAds.Companion.init(getApplicationContext());
-        showInterstitial(SplashScreen.this);
+        //showInterstitial(SplashScreen.this);
 
         handler = new Handler();
         handler.postDelayed(new Runnable() {

@@ -48,19 +48,15 @@ public class MainActivity extends AppCompatActivity {
 
                     switch (menuItem.getItemId()) {
                         case R.id.home:
-                            showInterstitial(MainActivity.this);
+                            //showInterstitial(MainActivity.this);
                             selectedFragment = new HomeFragment();
                             break;
-                        /*case R.id.setTimings:
-                            showInterstitial(MainActivity.this);
-                            selectedFragment = new NamazInfoFragment();
-                            break;*/
                         case R.id.calender:
-                            showInterstitial(MainActivity.this);
+                            //showInterstitial(MainActivity.this);
                             selectedFragment = new CalenderFragment();
                             break;
                         case R.id.namaz_info:
-                            showInterstitial(MainActivity.this);
+                            //showInterstitial(MainActivity.this);
                             selectedFragment = new NamazInfoFragment();
                             break;
                     }

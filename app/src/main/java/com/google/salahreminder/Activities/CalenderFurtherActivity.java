@@ -42,7 +42,7 @@ public class CalenderFurtherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calender_further);
 
         FrameLayout banner_container = findViewById(R.id.ad_view_container);
-        showInterstitial(CalenderFurtherActivity.this);
+        //showInterstitial(CalenderFurtherActivity.this);
         showBanner(CalenderFurtherActivity.this, banner_container);
         SingletonAds.Companion.init(getApplicationContext());
 

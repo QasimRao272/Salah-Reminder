@@ -143,6 +143,7 @@ public class HomeFragment extends Fragment {
 
         final Handler someHandler = new Handler(getMainLooper());
         someHandler.postDelayed(new
+
                                         Runnable() {
                                             @Override
                                             public void run() {

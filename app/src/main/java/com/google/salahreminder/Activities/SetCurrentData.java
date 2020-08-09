@@ -116,7 +116,7 @@ public class SetCurrentData extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (zuharBtnYes.isChecked()) {
                     mRef.child("Zuhar").setValue("Yes");
-                    fajarBtnYes.setBackgroundResource(R.drawable.green_border);
+                    zuharBtnYes.setBackgroundResource(R.drawable.green_border);
                 } else {
                     mRef.child("Zuhar").setValue("No");
                     zuharBtnYes.setBackgroundResource(R.drawable.red_border);
@@ -137,18 +137,6 @@ public class SetCurrentData extends AppCompatActivity {
             }
         });
 
-        ishaBtnYes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (ishaBtnYes.isChecked()) {
-                    mRef.child("Isha").setValue("Yes");
-                    ishaBtnYes.setBackgroundResource(R.drawable.green_border);
-                } else {
-                    mRef.child("Isha").setValue("No");
-                    ishaBtnYes.setBackgroundResource(R.drawable.red_border);
-                }
-            }
-        });
         maghribBtnYes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -162,6 +150,18 @@ public class SetCurrentData extends AppCompatActivity {
             }
         });
 
+        ishaBtnYes.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (ishaBtnYes.isChecked()) {
+                    mRef.child("Isha").setValue("Yes");
+                    ishaBtnYes.setBackgroundResource(R.drawable.green_border);
+                } else {
+                    mRef.child("Isha").setValue("No");
+                    ishaBtnYes.setBackgroundResource(R.drawable.red_border);
+                }
+            }
+        });
     }
 
     private void initilize() {
