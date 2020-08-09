@@ -6,15 +6,14 @@
 
 
         <shape android:shape="rectangle">
-            <solid android:color="#dfe1de"/>
+            <solid android:color="#dfe1de" />
             <corners
                 android:bottomLeftRadius="70dp"
-                android:bottomRightRadius="70dp"
-                />
+                android:bottomRightRadius="70dp" />
             <gradient
-                android:startColor="#297790"
+                android:angle="270"
                 android:endColor="#52a3b8"
-                android:angle="270"/>
+                android:startColor="#297790" />
         </shape>
     </item>
 </layer-list>

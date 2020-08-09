@@ -33,7 +33,7 @@ public class CalenderFurtherActivity extends AppCompatActivity {
     private CheckBox checkBoxishaYes;
     private DatabaseReference databaseReference;
     private TextView tvDay, tvMonth, tvYear;
-    String year, month;
+    String year, month, date;
     TextView txt_View_Date;
 
     @Override
@@ -48,11 +48,13 @@ public class CalenderFurtherActivity extends AppCompatActivity {
 
         initilise();
 
-        Calendar calendar = Calendar.getInstance();
+        /*Calendar calendar = Calendar.getInstance();
         year = String.valueOf(calendar.get(Calendar.YEAR));
-        month = String.valueOf(calendar.get(Calendar.MONTH));
+        month = String.valueOf(calendar.get(Calendar.MONTH));*/
 
-        String date = String.valueOf(getIntent().getIntExtra("date", 0));
+        date = String.valueOf(getIntent().getIntExtra("date", 0));
+        month = String.valueOf(getIntent().getIntExtra("month", 0));
+        year = String.valueOf(getIntent().getIntExtra("year", 0));
 
         tvDay.setText(date);
         tvMonth.setText(" - " + month);

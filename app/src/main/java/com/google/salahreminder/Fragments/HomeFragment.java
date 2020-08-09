@@ -43,6 +43,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.salahreminder.Activities.ExecutableService;
 import com.google.salahreminder.Activities.MainActivity;
 import com.google.salahreminder.Activities.Namaz_Rakat_Activity;
@@ -54,12 +59,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.NetworkInterface;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -82,6 +90,11 @@ public class HomeFragment extends Fragment {
     String month, year, date;
     String ff, zz, mm, ii, aa, sun_rise_sun, sunset_sun_set;
     TextView c_time;
+    TextView tvQazaNamaz;
+    int counter;
+    String y, m, dd;
+    List<Integer> values = new ArrayList<>();
+    int last_counter = 0;
 
     @Nullable
     @Override
@@ -90,14 +103,53 @@ public class HomeFragment extends Fragment {
 
         initialization();
 
-        final Handler someHandler = new Handler(getMainLooper());
-        someHandler.postDelayed(new Runnable() {
+        // Qaza Namaz Functionality
+
+        Calendar calendar = Calendar.getInstance();
+        y = String.valueOf(calendar.get(Calendar.YEAR));
+        m = String.valueOf(calendar.get(Calendar.MONTH));
+        dd = String.valueOf(calendar.get(Calendar.DATE));
+
+        DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("Offered_Prayer").child(getMacAddr());
+        refrence.addValueEventListener(new ValueEventListener() {
             @Override
-            public void run() {
-                c_time.setText(new SimpleDateFormat("hh:mm ss a", Locale.US).format(new Date()));
-                someHandler.postDelayed(this, 1000);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ///////////////////////////////////
+                for (DataSnapshot ds1 : snapshot.getChildren()) {
+                    for (DataSnapshot ds2 : ds1.getChildren()) {
+                        for (DataSnapshot ds3 : ds2.getChildren()) {
+                            for (DataSnapshot ds4 : ds3.getChildren()) {
+                                Log.d("Value", "onDataChange: " + ds4.getValue());
+                                if (ds4.getValue().equals("No")) {
+                                    values.clear();
+                                    values.add(++counter);
+                                    Log.d("Values", "onCreateView: " + values);
+                                    tvQazaNamaz.setText("Qaza Namaz: " + values);
+                                }
+                            }
+                        }
+                    }
+                }
+
             }
-        }, 10);
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        ///////////////////////////////////////////////////////////////
+
+        final Handler someHandler = new Handler(getMainLooper());
+        someHandler.postDelayed(new
+                                        Runnable() {
+                                            @Override
+                                            public void run() {
+                                                c_time.setText(new SimpleDateFormat("hh:mm ss a", Locale.US).format(new Date()));
+                                                someHandler.postDelayed(this, 1000);
+                                            }
+                                        }, 10);
 
         SharedPreferences prefs = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String fajar = prefs.getString("f", "-- : --");
@@ -132,7 +184,9 @@ public class HomeFragment extends Fragment {
         // locationEnabled();
 
         //Runtime permissions
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ContextCompat.checkSelfPermission(
+
+                getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
@@ -193,6 +247,7 @@ public class HomeFragment extends Fragment {
                 //return;
             }
         }
+
         Location myLocation = null;
         if (provider != null) {
             myLocation = locationManager.getLastKnownLocation(provider);
@@ -207,11 +262,14 @@ public class HomeFragment extends Fragment {
                 Log.d("Location", "onLocationChanged: " + address);
                 Toast.makeText(getContext(), "Location Updated!", Toast.LENGTH_SHORT).show();
             }
-        } catch (IOException e) {
+        } catch (
+                IOException e) {
             e.printStackTrace();
         }
 
-        if (getContext() != null) {
+        if (
+
+                getContext() != null) {
             String url = "http://api.aladhan.com/v1/timingsByAddress?address=" + address;
             ////
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
@@ -482,5 +540,41 @@ public class HomeFragment extends Fragment {
         c_time = view.findViewById(R.id.c_time);
 
         prefs = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+
+        tvQazaNamaz = view.findViewById(R.id.tvQazaNamaz);
+    }
+
+    public static String getMacAddr() {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(Integer.toHexString(b & 0xFF) + ":");
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception ex) {
+            //handle exception
+            ex.printStackTrace();
+        }
+        return "";
+    }
+
+    public void function(int i) {
+        DatabaseReference refRefrence = FirebaseDatabase.getInstance().getReference("Offered_Prayer")
+                .child(getMacAddr());
+        refRefrence.child("Counter").setValue(i);
     }
 }

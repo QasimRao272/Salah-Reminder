@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +32,9 @@ public class CalenderFragment extends Fragment {
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 Intent intent = new Intent(getContext(), CalenderFurtherActivity.class);
                 intent.putExtra("date", dayOfMonth);
+                intent.putExtra("month", month);
+                intent.putExtra("year", year);
+                intent.putExtra("year", year);
                 startActivity(intent);
             }
         });
