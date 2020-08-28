@@ -1,4 +1,4 @@
-package com.google.salahreminder;
+package com.salah.reminder.history;
 
 import org.junit.Test;
 
