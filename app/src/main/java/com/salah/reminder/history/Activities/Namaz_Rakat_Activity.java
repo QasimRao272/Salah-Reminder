@@ -18,7 +18,7 @@ public class Namaz_Rakat_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_namaz__rakat_);
 
-        showInterstitial(Namaz_Rakat_Activity.this);
+        //showInterstitial(Namaz_Rakat_Activity.this);
         FrameLayout banner_container = findViewById(R.id.ad_view_container);
         showBanner(this,banner_container);
 

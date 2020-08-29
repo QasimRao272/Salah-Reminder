@@ -3,8 +3,16 @@
     <string name="channel_name">chanel_name</string>
     <string name="fajar">Fajar:</string>
 
-    <string name="admob_app_id">ca-app-pub-2137792542799325~6269926192</string>
+
+////////////////////Originoal Id's///////////////////////////
+    <!--<string name="admob_app_id">ca-app-pub-2137792542799325~6269926192</string>
     <string name="admob_banner_id">ca-app-pub-2137792542799325/8764776338</string>
+    <string name="admob_interstitial">ca-app-pub-3940256099942544/1033173712</string>-->
+
+
+//////////////////Test Id's/////////////////////////////////
+    <string name="admob_app_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_banner_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="admob_interstitial">ca-app-pub-3940256099942544/1033173712</string>
 
 </resources>
